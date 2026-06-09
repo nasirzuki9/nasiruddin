@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Personal Academic Portfolio</title>
+    <style>
+        /* Premium Color Matrix matching About/Contact pages */
+        :root {
+            --bg: #0b0f19;
+            --surface: #131b2e;
+            --border: #1e294b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --brand: #38bdf8;
+            --brand-hover: #0ea5e9;
+            --accent: #10b981;
+            --code-bg: #070a12;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --brand: #0284c7;
+            --brand-hover: #0369a1;
+            --accent: #059669;
+            --code-bg: #f1f5f9;
+        }
+
+        /* Base Engine Rules */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Nav Engineering */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--brand);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+        }
+
+        .toggle-btn {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--brand);
+        }
+
+        /* Clean Header Section */
+        .blog-banner {
+            max-width: 1100px;
+            margin: 3rem auto 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .blog-banner h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-banner p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        /* Container Structure */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto 4rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Filter Badges Layout */
+        .filter-container {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-badge {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-badge.active, .filter-badge:hover {
+            background-color: var(--brand);
+            border-color: var(--brand);
+            color: var(--bg);
+        }
+
+        /* Vertical Stack Layout for Expandable Stream */
+        .blog-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Blog Article Cards */
+        .blog-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-card:hover {
+            border-color: var(--brand);
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .post-category {
+            color: var(--brand);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .blog-card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        /* Snippet text element */
+        .post-preview {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            display: block;
+        }
+
+        /* Full Post Hidden Content Node Container */
+        .full-content {
+            display: none;
+            flex-direction: column;
+            gap: 1.25rem;
+            border-top: 1px dashed var(--border);
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .full-content strong {
+            color: var(--text);
+        }
+
+        .full-content ul {
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .full-content code {
+            background-color: var(--code-bg);
+            color: var(--brand);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        /* Active Expanded Rules */
+        .blog-card.expanded {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--brand);
+        }
+
+        .blog-card.expanded .post-preview {
+            display: none;
+        }
+
+        .blog-card.expanded .full-content {
+            display: flex;
+        }
+
+        /* Trigger Actions Button Engineering */
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0;
+            align-self: flex-start;
+            margin-top: 0.5rem;
+        }
+
+        .read-more-btn:hover {
+            color: var(--brand);
+        }
+
+        /* Footer Execution */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        /* Breakpoints */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .blog-banner {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">NasirZuki<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button id="theme-toggle" class="toggle-btn" aria-label="Toggle Theme">✨ Light Mode</button>
+        </nav>
+    </header>
+
+    <section class="blog-banner">
+        <h1>Articles & Reflections</h1>
+        <p>Documenting my learning path, project logs, and academic milestones at UniSZA.</p>
+    </section>
+
+    <main class="container">
+
+        <div class="blog-stream">
+            
+            <article class="blog-card" id="post-1">
+                <div class="post-meta">
+                    <span class="post-category">Academic Reflections</span>
+                    <span>•</span>
+                    <span>June 2026</span>
+                </div>
+                <h2>From Syariah Laws to Software Code: A Modern Transition</h2>
+                
+                <p class="post-preview">
+                    Transitioning from a Syariah background at Form 6 (SMK Baling) to Software Engineering at UniSZA taught me an unexpected lesson: legal code and computer code are both built on strict structural logic. Read about how parsing legal texts prepared my mind for algorithmic troubleshooting...
+                </p>
+
+                <div class="full-content">
+                    <p>When I studied in <strong>Form 6 at SMK Baling taking the Syariah Course</strong>, I spent my days reading constitutional structures, conditional clauses, and logical compliance requirements. I never expected that this background would become my greatest asset when transitioning into software development at <strong>UniSZA (FIK)</strong>.</p>
+                    
+                    <p>In Syariah studies, you learn to analyze a core text rule, determine dependencies, and look for exceptions based on specific parameters. Programming follows the exact same logic. When writing an <code>if/else</code> branch loop statement in JavaScript, I am performing the exact same structural analysis I practiced in Baling, just translated into code.</p>
+                    
+                    <p><strong>Key takeaways from this interdisciplinary switch:</strong></p>
+                    <ul>
+                        <li><strong>Rule-Based Reasoning:</strong> Systems architectures run smoothly when conditions are defined properly.</li>
+                        <li><strong>Problem-Solving Focus:</strong> Troubleshooting an application bug feels identical to breaking down a complex institutional case study.</li>
+                        <li><strong>Unique Value:</strong> Combining humanities and strict technical logic allows me to look at UI/UX design with fresh, user-centric perspectives.</li>
+                    </ul>
+                </div>
+
+                <button class="read-more-btn" onclick="togglePost('post-1')">Read Full Post ⚡</button>
+            </article>
+
+            <article class="blog-card" id="post-2">
+                <div class="post-meta">
+                    <span class="post-category">Web Development</span>
+                    <span>•</span>
+                    <span>May 2026</span>
+                </div>
+                <h2>Demystifying CSD 34203: Building My Portfolio Site</h2>
+                
+                <p class="post-preview">
+                    A comprehensive walkthrough detailing how I developed this responsive static blog platform. From structuring modular semantic layouts with pure HTML5/CSS3 to managing multi-commit version controls using clean repository structures on GitHub.
+                </p>
+
+                <div class="full-content">
+                    <p>Developing this personal portfolio as part of my <strong>CSD 34203 Special Topics in Software Development</strong> coursework required merging clean visual aesthetics with high-performance execution.</p>
+                    
+                    <p>Instead of relying on bloated, heavy external graphical styling templates, I structured this platform from scratch using semantic HTML5 layouts, advanced CSS Root variable systems for dark/light themes, and light vanilla JavaScript engines.</p>
+                    
+                    <p><strong>Technical Milestone Highlights:</strong></p>
+                    <ul>
+                        <li><strong>Clean Repository Management:</strong> Maintained an organized workspace structure on GitHub with concise, descriptive tracking messages across commits.</li>
+                        <li><strong>Fluid Responsiveness:</strong> Built flexible UI viewports using CSS Grid systems and Media Queries to ensure flawless readability across phones, tablets, and desktop setups.</li>
+                        <li><strong>No Purple Backgrounds:</strong> Replaced distracting gradient banners with minimal, dark-mode compliant accents to maximize professional presentation value.</li>
+                    </ul>
+                </div>
+
+                <button class="read-more-btn" onclick="togglePost('post-2')">Read Full Post ⚡</button>
+            </article>
+
+            <article class="blog-card" id="post-3">
+                <div class="post-meta">
+                    <span class="post-category">Roadmaps</span>
+                    <span>•</span>
+                    <span>April 2026</span>
+                </div>
+                <h2>The 2026 Developer Roadmap: Aiming for Full-Stack Systems</h2>
+                
+                <p class="post-preview">
+                    Coding goes far beyond markup text. As a software student at FIK, my long-term academic goals involve extending frontend designs into full-stack reactive systems. Exploring why I plan to master Next.js framework engines, virtualized containers, and secure API gateways next.
+                </p>
+
+                <div class="full-content">
+                    <p>True engineering excellence lies in building fluid systems where client front-ends interact safely with server back-ends. As I progress through my education at <strong>UniSZA Besut Campus</strong>, my goal is to scale beyond basic HTML layouts.</p>
+                    
+                    <p>My roadmap targets full stack engineering, with a focus on real-world system applications, data optimization pipelines, and cloud computing architectures.</p>
+                    
+                    <p><strong>My Learning Goals:</strong></p>
+                    <ul>
+                        <li><strong>Component-Driven Frameworks:</strong> Migrating modular application layers into React and Next.js engines for faster page rendering.</li>
+                        <li><strong>Containerization Ecosystems:</strong> Learning Docker systems virtualization to package applications securely, eliminating "it works on my machine" issues.</li>
+                        <li><strong>Robust State Architecture:</strong> Implementing safe API endpoints and database logic rules to protect application info workflows.</li>
+                    </ul>
+                </div>
+
+                <button class="read-more-btn" onclick="togglePost('post-3')">Read Full Post ⚡</button>
+            </article>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. NasirZuki Coursework CSD 34203.</p>
+    </footer>
+
+    <script>
+        // Light/Dark Toggle Controller Engine
+        const themeToggle = document.getElementById('theme-toggle');
+        const activeTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+        updateButtonLabel(activeTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const freshTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', freshTheme);
+            localStorage.setItem('theme', freshTheme);
+            updateButtonLabel(freshTheme);
+        });
+
+        function updateButtonLabel(theme) {
+            themeToggle.textContent = theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        // JavaScript Post Expansion and Smooth Scroll Engine
+        function togglePost(postId) {
+            const card = document.getElementById(postId);
+            const button = card.querySelector('.read-more-btn');
+            
+            // Toggle expanded class
+            card.classList.toggle('expanded');
+            
+            if (card.classList.contains('expanded')) {
+                button.textContent = "Close Article ↩️";
+                
+                // Smooth scroll calculation down into view
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            } else {
+                button.textContent = "Read Full Post ⚡";
+            }
+        }
+    </script>
+</body>
+</html>

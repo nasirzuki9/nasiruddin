@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Software Developer</title>
+    <style>
+        /* Premium Color Matrix */
+        :root {
+            --bg: #0b0f19;
+            --surface: #131b2e;
+            --border: #1e294b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --brand: #38bdf8;
+            --brand-hover: #0ea5e9;
+            --accent: #0284c7;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --brand: #0284c7;
+            --brand-hover: #0369a1;
+            --accent: #38bdf8;
+        }
+
+        /* Base Engine Rules */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Nav Engineering */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--brand);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+        }
+
+        .toggle-btn {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.9rem;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--brand);
+        }
+
+        /* Container Structure */
+        .container {
+            max-width: 900px;
+            margin: 0 auto 3rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Top Center Circular Image Framework */
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border);
+            background-color: var(--surface);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Elements */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--brand);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Button UI */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.7rem 1.4rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .primary-btn {
+            background-color: var(--brand);
+            color: var(--bg);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--brand-hover);
+        }
+
+        .secondary-btn {
+            border: 1px solid var(--border);
+            color: var(--text);
+            background-color: var(--surface);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* Footer Execution */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .avatar-container {
+                margin-top: 2rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">NasirZuki<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button id="theme-toggle" class="toggle-btn" aria-label="Toggle Theme">✨ Light Mode</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="avatar-container">
+            <img src="orang hensem.jpg" alt="Muhammad Yasin Bin Safian Profile Picture" class="profile-img">
+        </div>
+
+        <section class="hero">
+            
+            <h1>Muhammad Nasiruddin bin Mohd Zuki</h1>
+            <p>Hi, I'm an aspiring Software Engineer at UniSZA specializing in modern frontend architecture and clean systems engineering. Welcome to my professional space.</p>
+            <div class="cta-buttons">
+                <a href="blog.html" class="btn primary-btn">View Articles</a>
+                <a href="contact.html" class="btn secondary-btn">Let's Connect</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. NasirZuki Coursework CSD 34203.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const activeTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+        updateButtonLabel(activeTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const freshTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', freshTheme);
+            localStorage.setItem('theme', freshTheme);
+            updateButtonLabel(freshTheme);
+        });
+
+        function updateButtonLabel(theme) {
+            themeToggle.textContent = theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+    </script>
+</body>
+</html>
